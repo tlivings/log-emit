@@ -1,0 +1,28 @@
+{
+  "name": "world-log",
+  "description": "Global logging utility taking advantage of the process event emitter.",
+  "version": "1.0.0",
+  "author": "Trevor Livingston <tlivings@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/tlivings/signals.git"
+  },
+  "bugs": "http://github.com/tlivings/signals/issues",
+  "engines": {
+    "node": ">= 6.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^1.10.3",
+    "istanbul": "^0.4.1",
+    "tape": "^4.2.2"
+  },
+  "scripts": {
+    "test": "tape test/*.js",
+    "lint": "eslint lib",
+    "cover": "istanbul cover tape -- test/*.js"
+  },
+  "main": "./lib",
+  "dependencies": {
+    "callermodule": "^2.0.0"
+  }
+}
