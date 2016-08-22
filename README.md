@@ -36,7 +36,7 @@ const Logging = require('world-log');
 
 const logger = Logging.createLogger(/* optional name */);
 
-logger.log(['debug'], 'hello world.');
+logger.log('debug', 'hello world.');
 ```
 
 ### Higher level example using RxJs to filter and format
