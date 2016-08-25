@@ -23,7 +23,7 @@ Test('logger', (t) => {
         const logger = Logging.createLogger('test-subscribe');
 
         const listener = ({ source, name, timestamp, tags }, data) => {
-            t.equal(source, 'world-log', 'source is correct.');
+            t.equal(source, 'log-emit', 'source is correct.');
             t.equal(name, 'test-subscribe', 'name is correct.');
             t.ok(Util.isNumber(timestamp), 'timestamp is a number.');
             t.ok(Util.isArray(tags), 'tags is an array.');
