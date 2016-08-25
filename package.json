@@ -1,13 +1,13 @@
 {
-  "name": "world-log",
+  "name": "log-emit",
   "description": "Global logging utility taking advantage of the process event emitter.",
   "version": "1.0.0",
   "author": "Trevor Livingston <tlivings@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/tlivings/signals.git"
+    "url": "git://github.com/tlivings/log-emit.git"
   },
-  "bugs": "http://github.com/tlivings/signals/issues",
+  "bugs": "http://github.com/tlivings/log-emit/issues",
   "engines": {
     "node": ">= 6.0.0"
   },

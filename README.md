@@ -1,4 +1,4 @@
-# world-log
+# log-emit
 
 Global logging utility taking advantage of the process event emitter.
 
@@ -32,7 +32,7 @@ Meta data in the event is as follows:
 ### Usage
 
 ```javascript
-const Logging = require('world-log');
+const Logging = require('log-emit');
 
 const logger = Logging.createLogger(/* optional name */);
 
