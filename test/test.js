@@ -13,7 +13,7 @@ Test('logger', (t) => {
 
         const logger = Logging.createLogger('test-subscribe');
 
-        const subscription = Logging.subscribe(
+        const subscription1 = Logging.subscribe(
             ({ source, name, timestamp, tags, data }) => {
                 logged++;
                 t.equal(source, 'log-emit', 'source is correct.');
@@ -24,13 +24,19 @@ Test('logger', (t) => {
             }
         );
 
+        const subscription2 = Logging.subscribe(
+            ({ source, name, timestamp, tags, data }) => {
+                logged++;
+            }
+        );
+
         logger.log('hello world');
 
-        subscription.unsubscribe();
+        subscription1.unsubscribe();
 
         logger.log('hello world');
 
-        t.equal(logged, 1, 'did not log again.');
+        t.equal(logged, 3);
     });
 
 });
