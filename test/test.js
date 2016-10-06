@@ -36,6 +36,8 @@ Test('logger', (t) => {
 
         logger.log('hello world');
 
+        subscription2.unsubscribe();
+
         t.equal(logged, 3);
     });
 
