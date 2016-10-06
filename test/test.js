@@ -15,6 +15,7 @@ Test('logger', (t) => {
 
         const subscription = Logging.subscribe(
             ({ source, name, timestamp, tags, data }) => {
+                console.timeEnd('log');
                 logged++;
                 t.equal(source, 'log-emit', 'source is correct.');
                 t.equal(name, 'test-subscribe', 'name is correct.');
@@ -23,6 +24,8 @@ Test('logger', (t) => {
                 t.equal(data, 'hello world', 'data is correct.');
             }
         );
+
+        console.time('log');
 
         logger.log('hello world');
 
