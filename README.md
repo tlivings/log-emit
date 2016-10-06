@@ -18,16 +18,12 @@ Factory
 
 Logger
 
-- `log(/* optional */ tags, data)` - emits a log event with two event parameters:
-    - `meta` - containing `{ source, name, timestamp, tags }`.
-    - `data` - any data passed to `log`.
-
-Meta data in the event is as follows:
-
-- `source` - the module name this logger is being called from.
-- `name` - optional name of the logger passed to `createLogger`.
-- `timestamp` - timestamp of this event.
-- `tags` - optionally passed to the `log` function.
+- `log(/* optional */ tags, data)` - emits a log event with an object containing:
+    - `source` - the module name this logger is being called from.
+    - `name` - optional name of the logger passed to `createLogger`.
+    - `timestamp` - timestamp of this event.
+    - `tags` - optionally passed to the `log` function.
+    - `data` - any data passing to `log`.
 
 ### Usage
 
@@ -46,9 +42,9 @@ const logger = Logging.createLogger('test');
 
 //Create a Rx observable publisher around the emitter.
 const publisher = Rx.Observable.create((observer) => {
-    const listener = Logging.subscribe(({ source, name, timestamp, tags }, data) => {
-        observer.next({ source, name, timestamp, tags, data });
-    });
+    const listener = (log) => observer.next(log);
+
+    Logging.subscribe(listener);
 
     return function () {
         Logging.unsubscribe(listener);

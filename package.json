@@ -23,6 +23,7 @@
   },
   "main": "./lib",
   "dependencies": {
-    "callermodule": "^2.0.0"
+    "callermodule": "^2.0.0",
+    "individual": "^3.0.0"
   }
 }

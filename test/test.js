@@ -22,7 +22,7 @@ Test('logger', (t) => {
 
         const logger = Logging.createLogger('test-subscribe');
 
-        const listener = ({ source, name, timestamp, tags }, data) => {
+        const listener = ({ source, name, timestamp, tags, data }) => {
             t.equal(source, 'log-emit', 'source is correct.');
             t.equal(name, 'test-subscribe', 'name is correct.');
             t.ok(Util.isNumber(timestamp), 'timestamp is a number.');
@@ -48,7 +48,7 @@ Test('logger', (t) => {
 
         const logger = Logging.createLogger('test-unsubscribeAll');
 
-        Logging.subscribe(({ source, name, timestamp, tags }, data) => {
+        Logging.subscribe(({ source, name, timestamp, tags, data }) => {
             ++logged;
         });
 
