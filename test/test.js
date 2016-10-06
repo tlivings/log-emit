@@ -6,16 +6,13 @@ const Util = require('util');
 
 Test('logger', (t) => {
 
-    t.test('subscribe and unsubscribe', (t) => {
-        t.plan(6);
-
-        let logged = 0;
+    t.test('subscribe and log', (t) => {
+        t.plan(5);
 
         const logger = Logging.createLogger('test-subscribe');
 
-        const subscription1 = Logging.subscribe(
+        const subscription = Logging.subscribe(
             ({ source, name, timestamp, tags, data }) => {
-                logged++;
                 t.equal(source, 'log-emit', 'source is correct.');
                 t.equal(name, 'test-subscribe', 'name is correct.');
                 t.ok(Util.isNumber(timestamp), 'timestamp is a number.');
@@ -24,21 +21,29 @@ Test('logger', (t) => {
             }
         );
 
-        const subscription2 = Logging.subscribe(
-            ({ source, name, timestamp, tags, data }) => {
-                logged++;
+        t.once('end', () => subscription.unsubscribe());
+
+        logger.log('hello world');
+    });
+
+    t.test('random perf', (t) => {
+        const logger = Logging.createLogger('test-performance');
+
+        const subscription = Logging.map(({data}) => data).subscribe(
+            (count) => {
+                if (count === 10000) {
+                    console.timeEnd('log');
+                    t.end();
+                }
             }
         );
 
-        logger.log('hello world');
+        t.once('end', () => subscription.unsubscribe());
 
-        subscription1.unsubscribe();
-
-        logger.log('hello world');
-
-        subscription2.unsubscribe();
-
-        t.equal(logged, 3);
+        console.time('log');
+        for (let i = 0; i <= 10000; ++i) {
+            logger.log('test', i);
+        }
     });
 
 });
