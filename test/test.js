@@ -18,10 +18,9 @@ Test('logger', (t) => {
                 t.ok(Util.isNumber(timestamp), 'timestamp is a number.');
                 t.ok(Util.isArray(tags), 'tags is an array.');
                 t.equal(data, 'hello world', 'data is correct.');
+                subscription.unsubscribe();
             }
         );
-
-        t.once('end', () => subscription.unsubscribe());
 
         logger.log('hello world');
     });
@@ -29,16 +28,15 @@ Test('logger', (t) => {
     t.test('random perf', (t) => {
         const logger = Logging.createLogger('test-performance');
 
-        const subscription = Logging.map(({data}) => data).subscribe(
-            (count) => {
-                if (count === 10000) {
+        const subscription = Logging.subscribe(
+            ({ data }) => {
+                if (data === 10000) {
                     console.timeEnd('log');
                     t.end();
+                    subscription.unsubscribe();
                 }
             }
         );
-
-        t.once('end', () => subscription.unsubscribe());
 
         console.time('log');
         for (let i = 0; i <= 10000; ++i) {
