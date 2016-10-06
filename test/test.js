@@ -6,34 +6,53 @@ const Util = require('util');
 
 Test('logger', (t) => {
 
-    t.test('subscribe and unsubscribe', (t) => {
-        t.plan(6);
+    // t.test('subscribe and unsubscribe', (t) => {
+    //     t.plan(6);
+    //
+    //     let logged = 0;
+    //
+    //     const logger = Logging.createLogger('test-subscribe');
+    //
+    //     const subscription = Logging.subscribe(
+    //         ({ source, name, timestamp, tags, data }) => {
+    //             console.timeEnd('log');
+    //             logged++;
+    //             t.equal(source, 'log-emit', 'source is correct.');
+    //             t.equal(name, 'test-subscribe', 'name is correct.');
+    //             t.ok(Util.isNumber(timestamp), 'timestamp is a number.');
+    //             t.ok(Util.isArray(tags), 'tags is an array.');
+    //             t.equal(data, 'hello world', 'data is correct.');
+    //         }
+    //     );
+    //
+    //     console.time('log');
+    //
+    //     logger.log('hello world');
+    //
+    //     subscription.unsubscribe();
+    //
+    //     logger.log('hello world');
+    //
+    //     t.equal(logged, 1, 'did not log again.');
+    // });
 
-        let logged = 0;
-
-        const logger = Logging.createLogger('test-subscribe');
+    t.test('random perf', (t) => {
+        const logger = Logging.createLogger('test-performance');
 
         const subscription = Logging.subscribe(
-            ({ source, name, timestamp, tags, data }) => {
-                console.timeEnd('log');
-                logged++;
-                t.equal(source, 'log-emit', 'source is correct.');
-                t.equal(name, 'test-subscribe', 'name is correct.');
-                t.ok(Util.isNumber(timestamp), 'timestamp is a number.');
-                t.ok(Util.isArray(tags), 'tags is an array.');
-                t.equal(data, 'hello world', 'data is correct.');
+            ({ data }) => {
+                if (data === 10000) {
+                    console.timeEnd('log');
+                    t.end();
+                    subscription.unsubscribe();
+                }
             }
         );
 
         console.time('log');
-
-        logger.log('hello world');
-
-        subscription.unsubscribe();
-
-        logger.log('hello world');
-
-        t.equal(logged, 1, 'did not log again.');
+        for (let i = 0; i <= 10000; ++i) {
+            logger.log('test', i);
+        }
     });
 
 });
